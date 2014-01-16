@@ -1,0 +1,32 @@
+def palindrome = { number ->
+    def snumber = number.toString()
+    def start = 0
+    def end = snumber.length() - 1
+    def palindrome = true
+    while (start < end && palindrome){
+        if(snumber.charAt(start) != snumber.charAt(end)){
+            palindrome = false;
+        }
+        start++
+        end--
+    }
+    return palindrome
+}
+
+println palindrome(1)
+println palindrome(10)
+println palindrome(101)
+
+numbers = (100..999).toArray()
+max = 0
+for(m in numbers){
+    for (n in numbers){
+        prod = m * n
+        if (palindrome(prod) && prod > max){
+            max = prod
+            println m + ":" + n + ":" + max
+         }
+     }
+}
+println max
+   

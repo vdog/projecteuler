@@ -1,0 +1,42 @@
+import groovyx.gpars.GParsPool
+import java.util.concurrent.atomic.AtomicBoolean
+
+primes = [12]
+THREADS=6
+isNotPrime = new AtomicBoolean()
+
+for(i = 3; i <= 2000000; i++){
+    //println "---- $i"
+    isNotPrime.set(false)
+    GParsPool.withPool{
+        //println primes
+        primes.eachParallel {
+            //println "$i $it"
+            if (i % it == 0){
+                isNotPrime.set(true)
+            }
+        }
+    }
+    if (!isNotPrime.get()){
+        primes.add(i)
+        //println "Added $i"
+        if(primes.size() % 10000 == 0){
+             println primes.size() + " at i=" + i
+        }
+    }           
+}
+
+println primes[5]
+println primes[primes.size() - 1]
+//if (primes.size() < 100){
+    println primes
+    println primes.size()
+//}
+
+def long sum=0
+for(p in primes)
+    sum += p
+    
+//sum -= primes[primes.size() - 1]
+
+println sum

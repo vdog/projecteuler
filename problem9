@@ -1,0 +1,23 @@
+def isPyTriplet = { a, b, c -> (a*a + b*b == c*c) }
+
+println isPyTriplet(2,3,4)
+println isPyTriplet(3,4,5)
+
+def found = false
+for(a = 1; a < 1000 && !found; a++){
+    for(b = 2; b < 1000 && !found; b++){
+        if (a < b)
+            for(c = 3; c < 1000 && !found; c++){
+                if(b < c){
+                    if(a+b+c == 1000){
+                        if(isPyTriplet(a,b,c)){
+                            println "Triplet found! " + a + " " + b + " " + c
+                            found = true
+                        }
+                    }
+                }
+            }
+    }
+}
+            
+    

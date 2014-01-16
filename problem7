@@ -1,0 +1,15 @@
+def primes = [2]
+for(i = 3; primes.size() < 10001; i++){
+    def notprime = false
+    for(p in primes){
+        if (i % p == 0){
+            notprime = true
+        }
+     }
+     if(!notprime){
+         primes.add(i)
+     }
+}
+
+println primes[5]
+println primes[10000]

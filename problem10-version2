@@ -1,0 +1,52 @@
+import java.util.concurrent.*
+import java.util.concurrent.atomic.AtomicBoolean
+
+THREADS=12
+pool = Executors.newFixedThreadPool(THREADS)
+def defer = { c -> pool.submit(c as Callable) }
+
+def primes = [2]
+def isPrime = new AtomicBoolean()
+isPrime.getAndSet(false)
+
+def divides = { i, x ->
+    if(isPrime.get())
+        return
+    if (i % x == 0){
+        isPrime.getAndSet(true)
+    }
+}
+
+for (i = 3; primes[primes.size() - 1] < 200; i++){
+    isPrime.getAndSet(false)
+    def tasks = []
+    for (p = 0; p < primes.size() && !isPrime.get(); p++){
+        def temp = primes[p]
+        //defer( divides(i, temp) )
+        tasks[p] = { divides(i, temp) }
+    }
+    println tasks.size()
+    pool.invokeAll(tasks)
+    if(!isPrime.get()){
+        primes.add(i)
+         if(primes.size() % 10000 == 0){
+             println primes.size() + " at i=" + i
+         }
+     }
+}
+
+println primes[5]
+println primes[primes.size() - 1]
+if (primes.size() < 100){
+    println primes
+    println primes.size()
+}
+
+def long sum=0
+for(p in primes)
+    sum += p
+
+sum -= primes[primes.size() - 1]
+
+println sum
+pool.shutdown()    

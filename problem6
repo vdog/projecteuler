@@ -1,0 +1,22 @@
+def sumOfSquares = { number ->
+    def sum = 0;
+    for(i = 1; i <= number; i++)
+        sum += i * i
+    return sum
+}
+
+println sumOfSquares(10)
+
+def squareOfSum = { number ->
+    def sum = 0;
+    for(i = 1; i <= number; i++)
+        sum += i
+    return (sum * sum)
+}
+
+println squareOfSum(10)
+
+def sumSquareDiff = { number -> squareOfSum(number) - sumOfSquares(number) }
+
+println sumSquareDiff(10)
+println sumSquareDiff(100)

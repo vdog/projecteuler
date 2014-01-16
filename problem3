@@ -1,0 +1,30 @@
+def start = new BigInteger("600851475143")
+
+def primes = [2]
+for(i = 3; i < 10000; i++){
+    def notprime = false
+    for(p in primes){
+        if (i % p == 0){
+            notprime = true
+        }
+     }
+     if(!notprime){
+         primes.add(i)
+     }
+}
+println primes.size()
+def factor = 1
+for(p in primes){
+    result= start.divideAndRemainder(new BigInteger(p))
+    if (result[1] == 0){
+        factor = result[0]
+        def exp = 1
+        while (factor % p == 0 && factor != p){
+            factor = factor / p
+            exp++
+        }
+        println "Found: " + p + " - " + factor + " - exp:  " + exp
+        start = factor
+    }
+ }
+

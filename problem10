@@ -1,0 +1,132 @@
+import java.util.concurrent.*
+import java.util.concurrent.atomic.AtomicBoolean
+
+def firstPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211]
+
+syncIsPrime = false
+synchronized setIsPrime(value, i, j){
+    println "Setting IsNotPrime to $value for $i $j"
+    syncIsPrime = value
+}
+
+THREADS=12
+pool = Executors.newFixedThreadPool(THREADS)
+defer = {c -> 
+    //println c.getClass().toString()
+    pool.submit(c as Callable) 
+    }
+
+def partition(array, size) {
+    def partitions = []
+    int partitionCount = array.size() / size
+
+    partitionCount.times { partitionNumber ->
+        def start = partitionNumber * size 
+        def end = start + size - 1
+        partitions << array[start..end]    
+    }
+
+    if (array.size() % size) partitions << array[partitionCount * size..-1]
+    return partitions    
+}
+
+primes = [2]
+at_isPrime = new AtomicBoolean()
+at_isPrime.getAndSet(false)
+
+dividesSet = { i, set -> 
+    //println "Got $i - $set"
+    //return false
+//    if (set == null || i == null ||
+     if(at_isPrime.get())
+        return false
+    def myNotPrime = false;
+    for(j = 0; j < set.size() && !myNotPrime; j++){
+        //if(set[j] != null){
+         if (i % set[j] == 0){
+             //println "$i is NOT prime!"
+             myNotPrime = true
+             //at_isPrime.set(true)
+             setIsPrime(true, i, set[j])
+         }
+         //}
+     }    
+     //if(!myNotPrime){
+     //    if(!firstPrimes.contains(i)){
+     //        println "$i $set"
+     //    }
+     //}
+         
+     return myNotPrime
+}
+
+for(i = 3; primes[primes.size() - 1] < 200; i++){
+    notprime = false
+    if (primes.size() > THREADS){
+            //println primes
+            int count = primes.size() / THREADS
+            partitions = partition(primes, count)
+            def notprimes = []
+            //println partitions
+            def tasks = []
+            for(k = 0; k < partitions.size(); k++){
+                //println "Setup task for $i, $k, ${partitions[k]}"
+                def temp = partitions[k]
+                //println temp
+                tasks[k] = { dividesSet(i,temp) }
+                //notprimes[k] = defer { dividesSet(i, temp) }
+            }
+            at_isPrime.getAndSet(false)
+            setIsPrime(false, 0, 0)
+            futures = pool.invokeAll(tasks);
+            //for(np in notprimes){
+            //    if (np){
+            //        println "Found a not prime!"
+            //        notprime = true
+            //    }
+            //}            
+            //for (f in futures){
+            //    if(f.get() == true){
+                    //println "Found a not prime!"
+            //        notprime = true
+            //    }
+            //}
+            //if(at_isPrime.get())
+            //    notprime = true
+            if(syncIsPrime){
+                notprime = true
+            }
+    }else{
+            for(j=0; j < primes.size() && !notprime; j++){
+                if (i % primes[j] == 0){
+                    notprime = true
+                }
+            }
+     }
+     if(!notprime){
+         primes.add(i)
+         if(primes.size() % 10000 == 0){
+             println primes.size() + " at i=" + i
+         }
+         if(!firstPrimes.contains(i)){
+             println "$i added to primes, but not a prime"
+         }
+     }
+}
+
+println primes[5]
+println primes[primes.size() - 1]
+if (primes.size() < 100){
+    println primes
+    println primes.size()
+}
+
+def long sum=0
+for(p in primes)
+    sum += p
+    
+sum -= primes[primes.size() - 1]
+
+println sum
+
+pool.shutdown()

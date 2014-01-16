@@ -1,0 +1,30 @@
+def divByX = { divisor, X ->
+    def divisible = true
+    for(i = X; i > 1 && divisible; i--){
+        if(divisor % i != 0){
+            divisible = false;
+        }
+    }
+    return divisible
+}
+
+println divByX(2000, 10)
+println divByX(2520, 10)
+
+def found = false
+def number = 2
+while (!found){
+    found = divByX(number++, 10)
+}
+println "Found:  " + --number
+
+found = false
+number = 2
+while (!found){
+    found = divByX(number++, 20)
+    if(number % 1000000 == 0)
+        println number
+}
+println "Found:  " + --number
+    
+    

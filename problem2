@@ -1,0 +1,17 @@
+def fib2 = 1
+def fib1 = 2
+def next = fib2 + fib1
+sum = fib1
+while (next < 4000000){
+    if (next % 2 == 0){
+        sum += next
+        print next + "\n"
+        }
+    fib2 = fib1
+    fib1 = next
+    next = fib2 + fib1
+}
+print sum
+
+
+    
