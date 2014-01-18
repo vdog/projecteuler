@@ -6,21 +6,13 @@ naturals[2] = 2
 NUM_PRIMES = 2000000
 
 for(i=3; i <= NUM_PRIMES; i++){
-	if (i % 50000 == 0){
-		println "Setup $i"
-	}
 	naturals[i] = i
 }
 
 for(i = 2; i <= NUM_PRIMES; i++){
-        if(i % 10 == 0){
-	  println i
-        }
 	testor = naturals[i]
-	for(j = i + 1; j <= NUM_PRIMES && testor != 0; j++){
-		if( naturals[j] % testor == 0){
-			naturals[j] = 0
-		}
+	for(j = 2*i; j <= NUM_PRIMES && testor != 0; j += i){
+		naturals[j] = 0
 	}
 }
 
