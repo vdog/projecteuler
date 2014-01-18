@@ -1,0 +1,42 @@
+naturals = []
+naturals[0] = 0
+naturals[1] = 0
+naturals[2] = 2
+
+NUM_PRIMES = 2000000
+
+for(i=3; i <= NUM_PRIMES; i++){
+	if (i % 50000 == 0){
+		println "Setup $i"
+	}
+	naturals[i] = i
+}
+
+for(i = 2; i <= NUM_PRIMES; i++){
+	println i
+	testor = naturals[i]
+	for(j = i + 1; j <= NUM_PRIMES && testor != 0; j++){
+		if (j % 50000 == 0){
+			println "Checking $j"
+		}
+		if( naturals[j] % testor == 0){
+			naturals[j] = 0
+		}
+	}
+}
+
+primes = []
+naturals.each{
+	if(it > 0){
+		primes.push(it)
+	}
+}
+println primes.size()
+if (primes.size() < 100){
+	println primes
+}
+
+long sum = 0
+naturals.each{ sum += it }
+
+println sum
