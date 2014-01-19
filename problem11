@@ -43,3 +43,31 @@ for(y = 0; y < 20; y++){
 
 println max
   
+// vertical
+for(y = 0; y < 17; y++){ 
+  for(x=0; x < 20; x++){
+    prod = Integer.parseInt(grid[y][x], 10) * Integer.parseInt(grid[y+1][x],10) * Integer.parseInt(grid[y+2][x],10) * Integer.parseInt(grid[y+3][x],10)
+    if (prod > max)
+      max = prod
+  }
+}
+
+// left diagonal
+for(y = 0; y < 17; y++){ 
+  for(x=0; x < 17; x++){
+    prod = Integer.parseInt(grid[y][x], 10) * Integer.parseInt(grid[y+1][x+1],10) * Integer.parseInt(grid[y+2][x+2],10) * Integer.parseInt(grid[y+3][x+3],10)
+    if (prod > max)
+      max = prod
+  }
+}
+
+// right diagonal
+for(y = 19; y > 2; y--){
+  for(x=0; x < 17; x++){
+    prod = Integer.parseInt(grid[y][x], 10) * Integer.parseInt(grid[y-1][x+1],10) * Integer.parseInt(grid[y-2][x+2],10) * Integer.parseInt(grid[y-3][x+3],10)
+    if (prod > max)
+      max = prod
+  }
+}
+
+println max
