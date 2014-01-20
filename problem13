@@ -1,0 +1,14 @@
+def scriptDir = getClass().protectionDomain.codeSource.location.path
+println getClass().classLoader.resourceLoader.loadGroovySource(getClass().name)
+
+dataFile = new File('problem13data')
+
+numbers = []
+
+dataFile.eachLine{
+    numbers.push(it)
+}
+
+numbers.each{
+    println it
+}
