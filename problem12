@@ -1,0 +1,35 @@
+
+NUM_DIVISORS = 500
+
+getDivisors = { n ->
+    int limit = Math.sqrt(n)
+    results = []
+    resultsEnd = []
+    for(j=1; j <= limit; j++){
+        if(n % j == 0){
+            results.push(j)
+            resultsEnd.push(n / j)
+        }
+    }
+    results + resultsEnd.reverse()
+}
+          
+triagNum = 1
+found = false
+maxDivisors = 0
+for(i = 2; !found; i++){
+    divisors = getDivisors(triagNum)
+    //println "$i - $triagNum: " + divisors
+    if (divisors.size() >= NUM_DIVISORS){
+        found = true
+        println "$i - $triagNum: " + divisors.size()
+    }
+    if (i % 100 == 0){
+        println "$i - $triagNum: " + divisors.size() + " Max: $maxDivisors"
+    }
+    if (divisors.size() > maxDivisors){
+        maxDivisors = divisors.size()
+    }
+    triagNum += i
+}
+    
