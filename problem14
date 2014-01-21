@@ -1,0 +1,34 @@
+
+collatz = { n ->
+  if( n % 2 == 0){
+    return n/2
+  }else{
+    return 3 * n + 1
+  }
+}
+
+int MAX_CHECK = 1000000
+max = 0
+
+for(i = MAX_CHECK; i > 0; i--){
+  int next = collatz(i)
+  //print "$i "
+  size = 1
+  while (next != 1){
+    //print "$next "
+    next = collatz(next)
+    size++
+    if(size % 1000 == 0){
+      println "Current size: $size at $i - $next"
+    }
+  }
+  size++
+  //println "$next - $size"
+  if (size > max){
+    println "New max chain $size starting at $i"
+    max = size
+  }
+  if (i % 100 == 0){
+    println i
+  }
+}
