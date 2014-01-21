@@ -1,6 +1,3 @@
-def scriptDir = getClass().protectionDomain.codeSource.location.path
-println getClass().classLoader.resourceLoader.loadGroovySource(getClass().name)
-
 dataFile = new File('problem13data')
 
 numbers = []
@@ -12,3 +9,24 @@ dataFile.eachLine{
 numbers.each{
     println it
 }
+
+qSum = []
+
+int carry = 0
+for(i = 49; i >= 0; i--){
+  sum = 0
+  numbers.each{
+    sum += Character.getNumericValue(it.charAt(i))
+  }
+  sum += carry
+  qSum[i] = sum % 10
+  carry = (sum - qSum[i]) / 10
+}
+
+println qSum.size()
+
+print carry
+qSum.each{
+  print it
+}
+println ""
