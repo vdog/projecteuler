@@ -7,11 +7,11 @@ collatz = { n ->
   }
 }
 
-int MAX_CHECK = 1000000
+int MAX_CHECK = 999167
 max = 0
 
 for(i = MAX_CHECK; i > 0; i--){
-  int next = collatz(i)
+  long next = collatz(i)
   //print "$i "
   size = 1
   while (next != 1){
@@ -21,6 +21,9 @@ for(i = MAX_CHECK; i > 0; i--){
     if(size % 1000 == 0){
       println "Current size: $size at $i - $next"
     }
+    if (next < 0){
+      System.exit(0)
+    }
   }
   size++
   //println "$next - $size"
@@ -28,7 +31,7 @@ for(i = MAX_CHECK; i > 0; i--){
     println "New max chain $size starting at $i"
     max = size
   }
-  if (i % 100 == 0){
+  if (i % 10000 == 0){
     println i
   }
 }
