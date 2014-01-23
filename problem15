@@ -1,0 +1,28 @@
+lattice = { n ->
+  //initialize grid
+  // grid[n,n] = 0, etc.
+  grid = []
+  for(x = 0; x <= n; x++){
+    grid[x] = []
+    for(y = 0; y <= n; y++){
+      grid[x][y] = 1
+    }
+  }
+  grid[n][n] = 0
+
+  // setup grid
+  for(x = n - 1; x >= 0; x--){
+    for(y = n - 1; y >=0; y--){
+      long temp = grid[x+1][y] + grid[x][y+1]
+      grid[x][y] = temp
+    }
+  }
+
+  return grid
+}
+
+println lattice(1)
+println lattice(2)
+println lattice(3)
+println lattice(4)
+println lattice(20)
