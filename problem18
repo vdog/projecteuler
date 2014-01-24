@@ -1,0 +1,57 @@
+class Node{
+  int value
+  Node left
+  Node right
+}
+
+n3 = new Node(value: 3, left:null, right:null)
+n2 = new Node(value: 2, left:null, right:null)
+n1 = new Node(value: 1, left:n2, right:n3)
+n2.left = n1
+
+println "$n1.value - $n1.left.value - $n1.right.value - $n2.left.value"
+
+dataFile = new File('problem18data')
+
+numbers = []
+dataFile.eachLine{
+  numbers.push(it.split())
+}
+
+nodes = []
+// initialize the values
+for(i = 0; i < numbers.size(); i++){
+  nodes[i] = []
+  for(n in numbers[i]){
+    nodes[i].push(new Node(value: Integer.parseInt(n, 10), left: null, right: null))
+  }
+}
+//wire up the links
+for(i = 0; i < nodes.size() - 1; i++){
+  for(j = 0; j < nodes[i].size(); j++){
+    nodes[i][j].left = nodes[i+1][j]
+    nodes[i][j].right = nodes[i+1][j+1]
+  }
+}
+
+println nodes
+
+current = nodes[0][0]
+sum = 0
+while(current != null){
+  //println current
+  print "$current.value - >"
+  sum += current.value
+  if(current.right != null){
+    if(current.left.value > current.right.value){
+      current = current.left
+    }else{
+      current = current.right
+    }
+  }else{
+    current = current.left
+  }
+  //println current
+}
+println ""
+println sum
