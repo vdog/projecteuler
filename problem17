@@ -6,6 +6,8 @@ englishWords = { n ->
   if (n > 1000){
     return "TOOOOO BIIIIGGG"
   }
+  if (n == 1000)
+    return "onethousand"
 
   result = ""
   int hundo = n / 100
