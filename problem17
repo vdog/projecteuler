@@ -1,0 +1,39 @@
+digitWords = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+teenWords = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+decadeWords = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+englishWords = { n ->
+  if (n > 1000){
+    return "TOOOOO BIIIIGGG"
+  }
+
+  result = ""
+  int hundo = n / 100
+  if (hundo > 0){
+    result += digitWords[hundo] + "hundred"
+    if(n % 100 != 0)
+      result += "and"
+  }
+  int decade = n % 100
+  int dec = decade / 10
+  int ones = decade % 10
+  if(decade > 19){
+    result += decadeWords[dec] + digitWords[ones]
+  }else{
+    if (decade > 9){
+      result += teenWords[ones]
+    }else{
+      result += digitWords[ones]
+    }
+  }
+  return result
+
+}
+
+sum = 0
+for(i = 1; i <= 1000; i++){
+  strI = englishWords(i)
+  println strI
+  sum += strI.length()
+}
+println sum
