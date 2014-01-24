@@ -2,6 +2,7 @@ class Node{
   int value
   Node left
   Node right
+  int max
 }
 
 n3 = new Node(value: 3, left:null, right:null)
@@ -34,24 +35,20 @@ for(i = 0; i < nodes.size() - 1; i++){
   }
 }
 
-println nodes
-
-current = nodes[0][0]
-sum = 0
-while(current != null){
-  //println current
-  print "$current.value - >"
-  sum += current.value
-  if(current.right != null){
-    if(current.left.value > current.right.value){
-      current = current.left
+//wire up max
+for(i = nodes.size() - 1; i >= 0; i--){
+  nodes[i].each{
+    if(it.left == null && it.right == null){
+      it.max = it.value
     }else{
-      current = current.right
+      if(it.left.max > it.right.max){
+        it.max = it.left.max
+      }else{
+        it.max = it.right.max
+      }
+      it.max += it.value
     }
-  }else{
-    current = current.left
   }
-  //println current
 }
-println ""
-println sum
+
+println nodes[0][0].max
