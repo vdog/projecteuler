@@ -1,0 +1,22 @@
+pmLong = [1]
+
+for(i = 1; i <= 1000; i++){
+  long carry = 0
+  for(j = pmLong.size() - 1; j >= 0; j--){
+    long prod = pmLong[j] * 2 + carry
+    pmLong[j] = prod % 10
+    carry = (prod - pmLong[j]) / 10
+  }
+  if (carry > 0){
+    pmLong.add(0,carry)
+  }
+  if(i < 20)
+    println pmLong
+}
+
+println pmLong
+sum = 0
+pmLong.each{
+  sum += it
+}
+println sum
