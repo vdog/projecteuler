@@ -1,0 +1,50 @@
+import java.util.Calendar
+import java.util.GregorianCalendar
+
+Calendar calendar = new GregorianCalendar();
+
+showCal = { c ->
+int year       = c.get(Calendar.YEAR);
+int month      = c.get(Calendar.MONTH); 
+int dayOfMonth = c.get(Calendar.DAY_OF_MONTH); 
+int dayOfWeek  = c.get(Calendar.DAY_OF_WEEK);
+int weekOfYear = c.get(Calendar.WEEK_OF_YEAR);
+int weekOfMonth= c.get(Calendar.WEEK_OF_MONTH);
+
+int hour       = c.get(Calendar.HOUR);        // 12 hour clock
+int hourOfDay  = c.get(Calendar.HOUR_OF_DAY); // 24 hour clock
+int minute     = c.get(Calendar.MINUTE);
+int second     = c.get(Calendar.SECOND);
+int millisecond= c.get(Calendar.MILLISECOND);
+println "$year-$month-$dayOfMonth, $dayOfWeek"
+}
+
+isSunday = { c ->
+	dayOfMonth = c.get(Calendar.DAY_OF_MONTH); 
+	day = c.get(Calendar.DAY_OF_WEEK)
+	if(dayOfMonth == 1){
+		if(day == 1){
+			showCal(c)
+			return 1
+		}
+	}
+	return 0
+}
+
+showCal(calendar)
+calendar.add(Calendar.DAY_OF_MONTH, 1);
+showCal(calendar)
+
+//1/1/1901
+calendar.set(Calendar.YEAR, 1901);
+calendar.set(Calendar.MONTH, 0); 
+calendar.set(Calendar.DAY_OF_MONTH, 1); 
+showCal(calendar)
+long sundays = 0
+println "Start Counting"
+while(calendar.get(Calendar.YEAR) < 2001){
+	sundays += isSunday(calendar)
+	calendar.add(Calendar.DAY_OF_MONTH, 1);
+}
+showCal(calendar)
+println sundays
