@@ -1,0 +1,13 @@
+import java.math.BigInteger
+
+public class F{
+	public static BigInteger one = new BigInteger(1)
+	public static BigInteger factorial(BigInteger n){
+		if(n == 1)
+			return 1
+		return n.multiply(factorial(n.subtract(one)))
+	}
+}
+
+
+println F.factorial(new BigInteger(100)).toString()
