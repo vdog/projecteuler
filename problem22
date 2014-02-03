@@ -1,0 +1,25 @@
+File dataFile = new File('names.txt')
+  
+  names = []
+  dataFile.eachLine{
+    it.split(",").each{ s ->
+	names.push(s)
+	}
+  }
+
+
+names.each{
+	it = it.replace("\"","")
+	println it
+}
+
+names.sort{ a, b ->
+	a.compareTo(b)
+}
+
+names.each{
+	println it
+}
+
+
+
