@@ -1,0 +1,45 @@
+divisors = { n ->       
+       int limit = Math.sqrt(n)
+       results = []           
+       resultsEnd = []        
+       for(j=1; j <= limit; j++){
+           if(n % j == 0){    
+              results.push(j)
+              resultsEnd.push(n / j)          
+          }
+      }
+      results + resultsEnd.reverse()  
+  }
+
+
+d = { int n ->
+	int sum = 0
+	divisors(n).each {
+		sum += it
+	}
+	sum - n
+}
+
+println "220 - "  + d(220)
+println "284 - " + d(284)
+println d(2)
+
+if (220 == d(d(220))){
+	println "yep"
+}
+
+dlist =[0, 0]
+for(i = 2; i < 10000; i++){
+	dlist[i] = d(i)
+	if(i % 1000 == 0)
+		println i
+}
+sum = 0
+for(i=2; i < 10000; i++){
+	if(i == dlist[dlist[i]] && i != dlist[i]){
+		println "$i - " + dlist[i] + " : " + dlist[dlist[i]]
+		sum += i
+	}
+}
+println sum
+	
