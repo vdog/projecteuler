@@ -8,18 +8,40 @@ File dataFile = new File('names.txt')
   }
 
 
-names.each{
-	it = it.replace("\"","")
-	println it
+names = names.collect{
+	it.replace("\"","")
 }
 
 names.sort{ a, b ->
 	a.compareTo(b)
 }
 
-names.each{
-	println it
+alphaValue = { n ->
+	ret = (int)n 
+	ret -= 64
+	ret
 }
+
+println alphaValue('A')
+test = "COLIN"
+	sum = 0
+	for(j = 0; j < test.length(); j++){
+		sum += alphaValue(test.charAt(j).charValue())
+	}
+println sum
+
+long totalscore = 0
+names.eachWithIndex{ it, i ->
+	//println it
+	sum = 0
+	for(j = 0; j < it.length(); j++){
+		sum += alphaValue(it.charAt(j).charValue())
+	}
+	//println "$sum * $i"
+	totalscore += (sum * (i + 1))
+}
+println totalscore
+
 
 
 
