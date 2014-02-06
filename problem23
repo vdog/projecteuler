@@ -1,0 +1,65 @@
+
+getDivisors = { n ->
+    int limit = Math.sqrt(n)
+    results = [1]
+    resultsEnd = []
+    for(j=2; j <= limit; j++){
+        if(n % j == 0){
+            	results.push(j)
+		pair = n / j
+		if (pair != j)
+            		resultsEnd.push(n / j)
+        }
+    }
+    results + resultsEnd.reverse()
+}
+
+checkAbundant = { n ->
+	divisors = getDivisors(n)
+	sum = 0
+	divisors.each{
+		sum += it
+	}
+	//println divisors
+	//println "$sum -> $n"
+	return (sum > n)
+}
+
+MAX_CHECK = 28123
+//MAX_CHECK = 1000
+abundantNumbers = []
+noSum = [0]
+for(i = 1; i < MAX_CHECK; i++){
+	if(checkAbundant(i)){
+		abundantNumbers.push(i)
+		//println "$i is Abundant"
+	}
+	if (i % 1000 == 0){
+		println i
+	}
+	noSum[i] = i
+}
+
+println abundantNumbers.size()
+combo = 1
+for(j = 0; j < abundantNumbers.size(); j++){
+	stop = false
+	for (k = j; k < abundantNumbers.size() && !stop; k++){
+		sum = abundantNumbers[j] + abundantNumbers[k]
+		if(sum < MAX_CHECK){
+			noSum[sum] = 0
+		}else{
+			stop = true
+		}
+		if (combo % 100000 == 0){
+			println "Combo: $combo - $j"
+		}
+		combo++
+	}
+}
+sumNoSum = 0
+noSum.each{
+	sumNoSum += it
+ }
+println sumNoSum
+assert sumNoSum == 4179871
