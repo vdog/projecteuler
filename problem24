@@ -1,0 +1,62 @@
+main = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+//main = [0, 1, 2]
+
+/*
+for(m = 0; m < main.size(); m++){
+	l1 = main.clone()
+	l1.remove(m)
+	//println l1
+	for(l = 0; l < l1.size(); l++){
+		l2 = l1.clone()
+		l2.remove(l)
+		//println l2
+		for(ll = 0; ll < l2.size(); ll++){
+			println main[m] + "" +  l1[l] + "" + l2[ll]
+		}
+	}
+}
+*/
+
+class Permutation{
+	public static int MAX_PERMS = 1000000
+	public static int currentCount = 0;
+	public static void printPerm( List list, String current){
+		//println "Enter printPerm: $list $current"
+		if (currentCount > MAX_PERMS - 1)
+			return
+		if(list.size() == 0){
+			currentCount++
+			if (currentCount % 10000 == 0 || currentCount == MAX_PERMS){
+				println "printPerm - $currentCount: $current"
+			}
+		}
+		for(int j = 0; j < list.size(); j++){
+			List list2 = list.clone()
+			int myChoice = list2[j]
+			list2.remove(j)
+			//println list
+			//println list2
+			Permutation.printPerm(list2, current + "" + myChoice)
+		}	
+	}
+}
+
+/*
+printPerm = { list, current ->
+	println "Enter printPerm: $list $current"
+	result = current
+	if(list.size() == 0){
+		println "printPerm: $current"
+	}
+	for(j = 0; j < list.size(); j++){
+		list2 = list.clone()
+		myChoice = list2[j]
+		list2.remove(j)
+		println list
+		println list2
+		printPerm(list2, current + "" + myChoice)
+	}
+}
+*/
+
+Permutation.printPerm(main, "")
