@@ -1,0 +1,33 @@
+import java.math.BigInteger
+
+public class F{
+	public static BigInteger one = new BigInteger(1)
+	public static List fibs = []
+	public static BigInteger fib(int term){
+		if(fibs[term] != null){
+			return fibs[term]
+		}else if (term == 1){
+			fibs[term] = one
+			return one
+		}else if (term == 2){
+			fibs[term] = one
+			return one
+		}else{
+			BigInteger result = fib(term - 1).add(fib(term - 2))
+			fibs[term] = result
+			return result
+		}
+	}
+}
+
+CHECK_DIGITS = 1000
+size = 0
+fibTerm = 1
+while (size < CHECK_DIGITS){
+	result = F.fib(fibTerm).toString(10)
+	size = result.length()
+	if(fibTerm % 100 == 1 || size == CHECK_DIGITS){
+		println "Term: $fibTerm - $result - $size"
+	}
+	fibTerm++
+}
