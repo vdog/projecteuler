@@ -10,14 +10,15 @@ decimalFromFraction = { n, d ->
 		n = r * 10
 		q = n / d
 		r = n % d
-		if(!result.contains(q) || q == 0){
+		if(!remainders.contains(r) || q == 0){
 			result.push(q)
+			remainders.push(r)
 		}else{
 			index = 0
-			while(result[index] != q){
+			while(remainders[index] != r){
 				index++
 			}
-			length = result.size() - index 
+			length = remainders.size() - index 
 			result.push(q)
 			result.push(length * -1)
 			r = 0
@@ -40,7 +41,7 @@ max = 0
 MAX_CHECK = 1000
 for(j = 2; j < MAX_CHECK; j++){
 	decimal = decimalFromFraction(1,j)
-	println decimal
+	println "$j - $decimal"
 	if(decimal[decimal.size() - 1] * -1 > max){
 		max = decimal[decimal.size() - 1] * -1
 		println "New max: $max at $j - $decimal"
