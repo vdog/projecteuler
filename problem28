@@ -1,0 +1,18 @@
+
+sumSpiralDiagonal = { gridSize ->
+	sum = 1
+	index = 1
+	for(i = 3; i <= gridSize; i += 2){
+		while(index < i * i){
+			index += i - 1
+			sum += index
+			print "$index " 
+		}		
+	}
+	println ""
+	return sum
+}
+
+assert sumSpiralDiagonal(5) == 101
+
+println sumSpiralDiagonal(1001)
