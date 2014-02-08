@@ -1,0 +1,65 @@
+
+NUM_PRIMES = 100000
+naturals = []
+for(i=3; i <= NUM_PRIMES; i++){
+	naturals[i] = i
+}
+
+for(i = 2; i <= NUM_PRIMES; i++){
+	testor = naturals[i]
+	for(j = 2*i; j <= NUM_PRIMES && testor != 0; j += i){
+		naturals[j] = 0
+	}
+}
+
+primes = []
+naturals.each{
+	if(it > 0)
+		primes.push(it)
+}
+
+//println primes
+println primes.size()
+MAX_P = primes[primes.size() - 1]
+
+numConsecutivePrimes = { coA, coB ->
+	count = 0
+	n = 0
+	sum = coB
+	while (Collections.binarySearch(primes, sum) >= 0){
+	//while (primes.contains(sum)){
+		n++
+		count++
+		sum = n*n + coA * n + coB
+		if(sum > MAX_P){
+			println "NOT ENOUGH PRIMES"
+			println "A:$coA B:$coB N:$n Sum:$sum $MAX_P"
+			System.exit(0)
+		}
+	}
+	return count
+}
+
+println numConsecutivePrimes(1, 41)
+println numConsecutivePrimes(-79, 1601)
+
+max = 0
+maxCoA = 0
+maxCoB = 0
+for(a = -999; a < 1000; a++){
+//for(a = -100; a < 1000; a++){
+	for(b = 0; b < primes.size() && primes[b] < 1000; b++){
+		primeCount = numConsecutivePrimes(a, primes[b])
+		if (primeCount > max){
+			max = primeCount
+			maxCoA = a
+			maxCoB = primes[b]
+			println "New Max $max at n^2 + $a * n + $maxCoB"
+		}
+	}
+	if (a % 100 == 0){
+		println "A:$a"
+	}
+}
+println maxCoA * maxCoB
+assert maxCoA * maxCoB == -59231
