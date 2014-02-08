@@ -1,0 +1,37 @@
+
+import java.math.BigInteger
+
+MAX_CHECK = 100
+
+def mc= [
+  compare: {bigIntA, bigIntB-> bigIntA.compareTo(bigIntB) }
+] as Comparator
+
+terms = []
+for(a = 2; a <= MAX_CHECK; a++){
+	bigA = new BigInteger(a)
+	for(b = 2; b <= MAX_CHECK; b++){
+		pow = bigA.pow(b)
+		index = Collections.binarySearch(terms, pow, mc)
+		if(index < 0){
+			index *= -1
+			index -= 1
+			//println pow.toString() + " should go at $index " + terms.size()
+			if(index >= terms.size()){
+				//println "pushing"
+				terms.push(pow)
+			}else{
+				//println "adding"
+				terms.add(index, pow)
+			}
+		}
+	}
+}
+
+if(terms.size() < 100){
+terms.each {
+	println it.toString()
+}
+}
+println terms.size()
+		
