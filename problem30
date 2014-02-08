@@ -1,0 +1,32 @@
+
+
+MAX_POWER_OF_FIVE = 413343
+//MAX_POWER_OF_FIVE = 10000
+
+
+getExponentSum = { int n, e ->
+	sum = 0
+	while(n > 0){
+		r = n % 10
+		sum += r**e
+		n -= r
+		n /= 10
+	}
+	return sum
+}
+
+assert getExponentSum(1634,4) == 1634
+assert getExponentSum(8208,4) == 8208
+assert getExponentSum(9474,4) == 9474
+
+long totalFound = 0
+for(x = 2; x <= MAX_POWER_OF_FIVE; x++){
+	if(getExponentSum(x,5) == x){
+		totalFound += x
+		println "FOUND $x:$totalFound"
+	}
+	if(x % 50000 == 0){
+		println x
+	}
+}
+println totalFound
