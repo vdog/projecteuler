@@ -1,0 +1,96 @@
+
+panDigitalProduct = { combo ->
+/*
+	combo is a pandigital number (list of digits)
+	check combo for products of these forms
+	1 X 2345 = 6789
+	12 X 345 = 6789
+	123 X 45 = 6789
+	1234 X 5 = 6789
+*/
+	def n6789 = combo[5] * 1000 + combo[6] * 100 + combo[7] * 10 + combo[8]
+	def n1 = combo[0]
+	def n12 = combo[0] * 10 + combo[1]
+	def n123 = combo[0] * 100 + combo[1] * 10 + combo[2]
+	def n1234 = combo[0] * 1000 + combo[1] * 100 + combo[2] * 10 + combo[3]
+	def n2345 = combo[1] * 1000 + combo[2] * 100 + combo[3] * 10 + combo[4]
+	def n345 = combo[2] * 100 + combo[3] * 10 + combo[4]
+	def n45 = combo[3] * 10 + combo[4]
+	def n5 = combo[4]
+	
+	//println combo
+	//def prod = n12 * n345
+	//println "$n6789 $n12 $n345 $prod"
+	
+	if( 
+		n1 * n2345 == n6789 ||
+		n12 * n345 == n6789 ||
+		n123 * n45 == n6789 ||
+		n1234 * n5 == n6789 
+	){
+		return n6789
+	}
+	return 0
+}
+
+test1 = [3, 9, 1, 8, 6, 7, 2, 5, 4]
+assert panDigitalProduct(test1) == 7254
+println panDigitalProduct(test1)
+println test1.sum()
+
+products = []
+
+checkCombo = { def combo ->
+	if(combo.size() == 9){
+		def PDP = panDigitalProduct(combo)
+		if(PDP > 0){
+			println "$combo is a PDP"
+			def index = Collections.binarySearch(products, PDP)
+			if(index < 0){
+				index *= -1
+				index -= 1
+				//println pow.toString() + " should go at $index " + terms.size()
+				if(index >= products.size()){
+					//println "pushing"
+					products.push(PDP)
+				}else{
+					//println "adding"
+					products.add(index, PDP)
+				}
+			}
+		}
+	}
+}
+comboCount = 0
+makeCombo = { def list, def current ->
+	//println "Enter makeCombo: $list $current"
+	if(list.size() == 0){
+		if(comboCount % 10000 == 0){
+			println "makeCombo: $current"
+		}
+		checkCombo(current)
+		comboCount++
+	}
+	def myIndex = current.size()
+	for(def j = 0; j < list.size(); j++){
+		def list2 = list.clone()
+		def myChoice = list2[j]
+		list2.remove(j)
+		//println list
+		//println list2
+		current[myIndex] = myChoice
+		makeCombo(list2, current)
+		if(current.size() > myIndex + 1){
+			current.remove(myIndex + 1)
+		}
+	}
+}
+
+test2 = [0, 1, 2]
+makeCombo(test2, [])
+
+main = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+makeCombo(main, [])
+
+println products.sum()
+
