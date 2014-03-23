@@ -1,0 +1,139 @@
+
+			/*
+				n1 < n2 < n3
+
+				n1 n2 / n1 n3 =? n2 / n3
+				n1 n2 / n3 n1 =? n2 / n3
+				n1 n2 / n2 n3 =? n1 / n3
+				n1 n2 / n3 n2 =? n1 / n3
+
+				n1 n3 / n1 n2 =? n3 / n2 !!!! n1 n3 > n1 n2
+				n1 n3 / n2 n1 =? n3 / n2 !!!! n3 / n2 > 1
+				n1 n3 / n3 n2 =? n1 / n2
+				n1 n3 / n2 n3 =? n1 / n2
+
+				n2 n1 / n1 n3 =? n2 / n3 !!!!! n2 n1 > n1 n3
+				n2 n1 / n3 n1 =? n2 / n3
+				n2 n1 / n2 n3 =? n1 / n3
+				n2 n1 / n3 n2 =? n1 / n3
+
+				n2 n3 / n1 n3 =? n2 / n1 !!!! n2 / n1 > 1
+				n2 n3 / n3 n1 =? n2 / n1 !!!!
+				n2 n3 / n2 n1 =? n3 / n1 !!!!
+				n2 n3 / n1 n2 =? n3 / n1 !!!!
+
+				n3 n1 / n1 n2 =? n3 / n2 !!!! n3 / n2 > 1
+				n3 n1 / n2 n1 =? n3 / n2 !!!! n2 / n2 > 1
+				n3 n1 / n3 n2 =? n1 / n2
+				n3 n1 / n2 n3 =? n1 / n2 !!!! n3 n1 > n2 n3
+
+				n3 n2 / n3 n1 =? n2 / n1 !!!!
+				n3 n2 / n1 n3 =? n2 / n1 !!!!
+				n3 n2 / n2 n1 =? n3 / n1 !!!!
+				n3 n2 / n1 n2 =? n3 / n1 !!!!
+			*/
+
+fractions = []
+numProduct = 1
+denProduct = 1
+
+generateFraction = { n, n2, n3 ->
+
+	num12 = n * 10 + n2
+	num13 = n * 10 + n3
+	num21 = n2 * 10 + n
+	num31 = n3 * 10 + n
+	den13 = n * 10 + n3
+	den31 = n3 * 10 + n
+	den23 = n2 * 10 + n3
+	den32 = n3 * 10 + n2
+
+	/*
+	
+				n1 n2 / n1 n3 =? n2 / n3
+				n1 n2 / n3 n1 =? n2 / n3
+
+				n1 n2 / n2 n3 =? n1 / n3
+				n1 n2 / n3 n2 =? n1 / n3
+
+				n1 n3 / n3 n2 =? n1 / n2
+				n1 n3 / n2 n3 =? n1 / n2
+
+				n2 n1 / n3 n1 =? n2 / n3
+
+				n2 n1 / n2 n3 =? n1 / n3
+				n2 n1 / n3 n2 =? n1 / n3
+
+				n3 n1 / n3 n2 =? n1 / n2
+	*/
+
+	if(num12 / den13 == n2 / n3){
+		println "$n $n2 / $n $n3 == $n2 / $n3 ($num12 / $den13)"
+		numProduct = numProduct * num12
+		denProduct = denProduct * den13
+	}
+	if(num12 / den31 == n2 / n3){
+		println "$n $n2 / $n3 $n == $n2 / $n3 ($num12 / $den31)"
+		numProduct = numProduct * num12
+		denProduct = denProduct * den31
+	}
+	if(num12 / den23 == n / n3){
+		println "$n $n2 / $n2 $n3 == $n / $n3 ($num12 / $den23)"
+		numProduct = numProduct * num12
+		denProduct = denProduct * den23
+	}
+	if(num12 / den32 == n / n3){
+		println "$n $n2 / $n2 $n2 == $n / $n3 ($num12 / $den32)"
+		numProduct = numProduct * num12
+		denProduct = denProduct * den32
+	}
+	if(num13 / den32 == n / n2){
+		println "$n $n3 / $n3 $n2 == $n / $n2 ($num13 / $den32)"
+		numProduct = numProduct * num13
+		denProduct = denProduct * den32
+	}
+	if(num13 / den23 == n / n2){
+		println "$n $n3 / $n2 $n3 == $n / $n2 ($num13 / $den23)"
+		numProduct = numProduct * num13
+		denProduct = denProduct * den23
+	}
+	if(num21 / den31 == n2 / n3){
+		println "$n2 $n / $n3 $n == $n2 / $n3 ($num21 / $den31)"
+		numProduct = numProduct * num21
+		denProduct = denProduct * den31
+	}
+	if(num21 / den23 == n / n3){
+		println "$n2 $n / $n2 $n3 == $n / $n3 ($num21 / $den23)"
+		numProduct = numProduct * num21
+		denProduct = denProduct * den23
+	}
+	if(num21 / den32 == n / n3){
+		println "$n2 $n / $n3 $n2 == $n / $n3 ($num21 / $den32)"
+		numProduct = numProduct * num21
+		denProduct = denProduct * den32
+	}
+	if(num31 / den32 == n / n2){
+		println "$n3 $n / $n3 $n2 == $n / $n2 ($num31 / $den32)"
+		numProduct = numProduct * num31
+		denProduct = denProduct * den32
+	}
+}
+
+generateFraction(4,8,9)
+println numProduct
+println denProduct
+
+numProduct = 1
+denProduct = 1
+
+
+for (n1 = 1; n1 < 8; n1++){
+	for(n2 = n1 + 1; n2 < 10; n2++){
+		for(n3 = n2 + 1; n3 < 10; n3++){
+			println "$n1 $n2 $n3"
+			generateFraction(n1, n2, n3)
+		}
+	}
+}
+println numProduct
+println denProduct
